@@ -1,9 +1,8 @@
 class UnlockController < ApplicationController
-  # GET /unlock
-  def index
-  end
-
   def show
-   render(:text => request.path)
+    page = Page.find_by_path(request.path)
+    if (page.nil?) then render(:text => "Page #{request.path} doesn't exist.")
+    else                @content = eval(page.code)
+    end
   end
 end
