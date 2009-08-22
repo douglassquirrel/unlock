@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class UnlockController < ApplicationController
   def show
     page = Page.find_by_path(request.path)
