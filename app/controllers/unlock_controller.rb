@@ -10,8 +10,8 @@ class UnlockController < ApplicationController
     else                 @content = eval(@page.code)
     end
     respond_to do |format|
-      format.html # unlock.html.erb
-      format.xml  { render :xml => "<vxml version='2.0' xmlns='http://www.w3.org/2001/vxml'><form><block><break time='1000'/><prompt>Hello world!</prompt></block></form></vxml>" }
+      format.html # show.html.erb
+      format.xml  # show.xml.erb 
     end
   end
 end
