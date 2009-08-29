@@ -11,7 +11,7 @@ class UnlockController < ApplicationController
     end
     respond_to do |format|
       format.html # unlock.html.erb
-      format.xml  { render :xml => "<hello>world</hello>" }
+      format.xml  { render :xml => "<vxml version='2.0' xmlns='http://www.w3.org/2001/vxml'><form><block><break time='1000'/><prompt>Hello world!</prompt></block></form></vxml>" }
     end
   end
 end
