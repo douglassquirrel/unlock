@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'cgi'
+require 'enumerator'
 require 'nokogiri'
 require 'open-uri'
 
@@ -19,7 +20,12 @@ class UnlockController < ApplicationController
 
   def convert_to_voice_xml
     doc = Nokogiri::HTML(@content)
+    choices = []
+    doc.xpath("//ul//a").enum_with_index.each { |node, number| 
+        break if number>=8; 
+        choices << { :number => number, :url => node.xpath("@href").to_s + "&format=xml", :prompt => node.xpath("text()") } 
+    }
     @content = { :paragraphs => doc.xpath("//p/text()").collect { |node| node.to_s },
-                 :choices => doc.xpath("//ul//a").collect { |node| { :url => node.xpath("@href").to_s + "&format=xml", :prompt => node.xpath("text()") } } }
+                 :choices    => choices }
   end 
 end
