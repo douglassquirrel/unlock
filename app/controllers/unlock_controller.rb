@@ -11,7 +11,14 @@ class UnlockController < ApplicationController
     end
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  # show.xml.erb 
+      format.xml  { convert_to_voice_xml } # show.xml.erb 
     end
   end
+
+  private
+
+  def convert_to_voice_xml
+    doc = Nokogiri::HTML(@content)
+    @content = { :paragraphs => doc.xpath("//p/text()").collect { |node| node.to_s } }
+  end 
 end

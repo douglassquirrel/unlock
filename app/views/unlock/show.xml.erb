@@ -2,9 +2,9 @@
   <form>
     <block>
       <break time='1000'/>
-      <prompt>
-        Hello world - this is show.xml.erb, with title <%= @page.name %>!
-      </prompt>
+      <% @content[:paragraphs].each do |text| %>
+        <prompt> <%=h text %> </prompt>
+      <% end %>      
     </block>
   </form>
 </vxml>
