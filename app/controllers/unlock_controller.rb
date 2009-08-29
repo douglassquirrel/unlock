@@ -20,6 +20,6 @@ class UnlockController < ApplicationController
   def convert_to_voice_xml
     doc = Nokogiri::HTML(@content)
     @content = { :paragraphs => doc.xpath("//p/text()").collect { |node| node.to_s },
-                 :choices => ["foo", "bar"] }
+                 :choices => doc.xpath("//ul//a").collect { |node| { :url => node.xpath("@href").to_s + "&format=xml", :prompt => node.xpath("text()") } } }
   end 
 end

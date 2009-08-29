@@ -2,7 +2,7 @@ def choices(xml, list)
   n = [list.size, 7].min
   xml.field "name"=>"choice" do
     (1..n).each do |i|
-      xml.prompt "Press #{i} for #{list[i-1]}"
+      xml.prompt "Press #{i} for #{list[i-1][:prompt]}"
     end
     xml.grammar "type"=>"text/gsl" do
       xml.cdata! "[" + ((1..n).collect { |i| "[dtmf-#{i}] {<choice \"#{i}\">}" }.join("\n")) + "]"
@@ -13,7 +13,7 @@ def choices(xml, list)
   xml.filled do
     (1..n).each do |i|
       xml.if "cond" => "choice == '#{i}'" do
-        xml.submit "next" => list[i-1], "method" => "get"
+        xml.submit "next" => list[i-1][:url], "method" => "get"
       end 
     end
   end
