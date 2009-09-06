@@ -7,7 +7,7 @@ require 'open-uri'
 class UnlockController < ApplicationController
   def show
     @page = Page.find_by_path(request.path)
-    if (@page.nil?) then render(:text => "Page #{request.path} doesn't exist.")
+    if (@page.nil?) then render(:text => "Page #{request.path} doesn't exist."); return;
     else                 @content = eval(@page.code)
     end
     respond_to do |format|
