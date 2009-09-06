@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version = "2.1" >
+
+  <form>
+    <block>
+    <prompt>
+      Sorry, you have reached your daily usage limit. Please phone back tomorrow. Bye!
+    </prompt>
+    </block>
+  </form>
+</vxml>

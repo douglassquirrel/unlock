@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- NOTE THAT WE *MUST* DECLARE THE xmlns ATTRIBUTE -->
 <ccxml version="1.0" xmlns:voxeo="http://community.voxeo.com/xmlns/ccxml">
+  <var name="maindialog"/>
+  <var name="timeoutdialog"/>
+  <var name="state" expr="'init'"/>
+  <var name="connid"/>
 
-  <var name="myDialogID"/>
-  <var name="myState" expr="'init'"/>
-
-  <eventprocessor statevariable="myState">
+  <eventprocessor statevariable="state">
 
     <transition event="connection.alerting" state="init">
       <log expr="'***** CONNECTION ALERTING *****'"/>
       <accept/>
     </transition>
-
 
     <transition event="connection.connected" state="init">
       <log expr="'***** CALL WAS ANSWERED *****'"/>
@@ -23,23 +22,29 @@
       <log expr="'***** EVENT$.CONNECTION.LOCAL = ' + event$.connection.local"/>
       <log expr="'***** EVENT$.CONNECTION.REMOTE = ' + event$.connection.remote"/>
       <log expr="'***** EVENT$.CONNECTION.ORIGINATOR = ' + event$.connection.originator"/>
+      <assign name="connid" expr="event$.connectionid"/>
 
-      <dialogstart src="'http://blindpages.com/home?format=xml'" type="'application/voicexml+xml'" dialogid="myDialogID"/>
-      <assign name="myState" expr="'dialogActive'" />
+      <log expr="'Sending user to blindpages home'"/>
+      <assign name="state" expr="'dialogActive'" />
+      <dialogstart src="'http://blindpages.com/home?format=xml'" type="'application/voicexml+xml'" dialogid="maindialog"/>
       <send name="'timeout'" target="session.id" delay="'600s'"/>
     </transition>
 
-
     <transition event="timeout" state="dialogActive">
-      <log expr="'***** TIMEOUT RECEIVED, NOW TERMINATING THE DIALOG *****'"/>
-      <dialogterminate dialogid="myDialogID" immediate="false"/>
+      <log expr="'***** TIMEOUT RECEIVED, NOW TERMINATING THE MAIN DIALOG *****'"/>
+      <assign name="state" expr="'timedout'" />
+      <dialogterminate dialogid="maindialog" immediate="false"/>
     </transition>
 
+    <transition event="dialog.exit" state="timedout">
+      <assign name="state" expr="'timedout-done'"/>
+      <dialogstart src="'http://blindpages.com/limit.xml'" type="'application/voicexml+xml'" 
+                   dialogid="timeoutdialog" connectionid="connid"/>
+    </transition>
 
     <transition event="send.successful" state="dialogActive">
       <log expr="'***** SEND IS SUCCESSFUL *****'"/>
     </transition>
-
 
     <transition event="error.dialog.notstarted'">
       <log expr="'****** ERROR.DIALOGNOTSTARTED.NAME = ' + event$.name"/>
@@ -60,9 +65,8 @@
       <exit/>
     </transition>
 
-
     <transition event="dialog.exit" state="'dialogActive'">
-      <log expr="'***** DIALOG EXIT IN DIALOG ACTIVE STATE *****'"/>
+      <log expr="'***** DIALOG EXIT IN MAIN DIALOG ACTIVE STATE *****'"/>
       <exit/>
     </transition>   
 
@@ -88,7 +92,6 @@
       <exit/>
     </transition>
 
-
     <transition event="error.*">
       <log expr="'an error has occured (' + event$.reason + ')'"/>
       <log expr="'***  EVENT$.NAME = ' + event$.name"/>
@@ -98,11 +101,9 @@
       <log expr="'***  EVENT$.EVENTSOURCE = ' + event$.eventsource"/>
       <log expr="'***  EVENT$.EVENTSOURCETYPE = ' + event$.eventsourcetype"/>
       <voxeo:sendemail to="'squirrel@blindpages.com'"
-                        from="'myApp@here.com'"
+                        from="'noreply@blindpages.com'"
                         type="'debug'"
-                        body="'We had an error! \n Time to panic! \n
-                            Flee the cities, abandon all hope!'"/>
-
+                        body="'Error in blindpages by phone - see logs'"/>
       <exit/>
     </transition>
   </eventprocessor>
