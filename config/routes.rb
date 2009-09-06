@@ -36,6 +36,9 @@ map.pages "pages/:action/:id",
     :controller => "pages"
 
 map.root :controller => "unlock"
+map.more "more",
+    :controller => "unlock",
+    :action => "more"
 map.privacy "privacy",
     :controller => "unlock", 
     :action => "privacy"
