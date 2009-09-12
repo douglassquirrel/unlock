@@ -3,7 +3,12 @@ class AuthController < ApplicationController
   end
 
   def login
-    redirect_to "/home"
+    if 1==1 then 
+      flash[:notice] = "Passcode not recognised"
+      redirect_to :action => "index"
+    else
+      redirect_to "/home"
+    end
   end
 end
 
