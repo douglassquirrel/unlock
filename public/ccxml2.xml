@@ -94,8 +94,13 @@
     </transition>
 
     <transition event="connection.disconnected">
-      <log expr="'*** The call was just disconnected ***'"/>
-      <send name="'http.get'" targettype="'basichttp'" target="'http://blindpages.com/disconnect'" namelist="connid" />
+      <log expr="'*** Call was just disconnected ***'"/>
+      <assign name="state" expr="'disconnected'" />
+      <send name="'http.get'" targettype="'basichttp'" target="'http://blindpages.com/auth/logout'" namelist="connid" />
+    </transition>
+
+    <transition event="send.successful" state="'disconnected'">
+      <log expr="'***** SEND IS SUCCESSFUL (on disconnection) *****'"/>
       <exit/>
     </transition>
 
