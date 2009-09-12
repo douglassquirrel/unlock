@@ -4,6 +4,7 @@
   <var name="timeoutdialog"/>
   <var name="state" expr="'init'"/>
   <var name="connid"/>
+  <var name="format" expr="'xml'"/>
 
   <eventprocessor statevariable="state">
 
@@ -26,7 +27,7 @@
 
       <log expr="'Sending user to blindpages start page'"/>
       <assign name="state" expr="'dialogActive'" />
-      <dialogstart src="'http://blindpages.com/auth?format=xml'" type="'application/voicexml+xml'" dialogid="maindialog"/>
+      <dialogstart src="'http://blindpages.com/auth'" namelist="format connid" type="'application/voicexml+xml'" dialogid="maindialog"/>
       <send name="'timeout'" target="session.id" delay="'600s'"/>
     </transition>
 
@@ -89,6 +90,12 @@
       <log expr="'***** EVENT$.DIALOG.SRC = ' + event$.dialog.src"/>
       <log expr="'***** EVENT$.DIALOG.INPUT = ' + event$.dialog.input"/>
       <log expr="'***** EVENT$.DIALOG.OUTPUTS = ' + event$.dialog.outputs"/>
+      <exit/>
+    </transition>
+
+    <transition event="connection.disconnected">
+      <log expr="'*** The call was just disconnected ***'"/>
+      <send name="'http.get'" targettype="'basichttp'" target="'http://blindpages.com/disconnect'" namelist="connid" />
       <exit/>
     </transition>
 

@@ -20,7 +20,7 @@ xml.vxml "xmlns" => "http://www.w3.org/2001/vxml", "version" => "2.0" do
       xml.nomatch do add_prompt(xml, "I did not recognise that. Please try again."); xml.reprompt; end
     end
     xml.filled do
-      xml.submit "next" => "/auth/login?format=xml&callid=#{params['session.sessionid']}", "method" => "get"
+      xml.submit "next" => "/auth/login?format=xml&connid=#{params['connid']}", "method" => "get"
     end
   end
 end
