@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>BlindPages - Authentication</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  </head>
+  <body>
+    <h1>Please enter your passcode</h1>
+
+    <% form_tag :controller => "auth", :action => "login", :method => :post do %>
+      <p>
+        <%= label_tag 'passcode' %><br/>
+        <%= text_field_tag 'passcode', nil, :maxlength => 10, :size => 10, :type => "password" %><br/>
+        <%= submit_tag 'Log in' %>
+      </p>
+    <% end %>
+   
+    <p>
+      <a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#115;&#117;&#112;&#112;&#x6f;&#x72;&#x74;&#49;&#50;&#51;&#x40;&#x62;&#x6c;&#105;&#110;&#x64;&#112;&#x61;&#x67;&#x65;&#x73;&#46;&#99;&#111;&#109;">Send email to blindpages</a> if you've forgotten your passcode.
+    </p>
+  </body>
+</html>
