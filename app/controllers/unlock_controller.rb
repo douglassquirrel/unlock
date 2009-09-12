@@ -28,7 +28,7 @@ class UnlockController < ApplicationController
     choices = (choices[choice_start, 7] || []).enum_with_index.each { |choice, number| choice[:number] = number }
     if choice_start > 0                 then choices << { :number => 8, :url => url.sub(/choice_start=\d*/, "choice_start=#{[0, choice_start-7].max}"), :prompt => "Previous choices" } end
     if choice_start < total_choices - 7 then choices << { :number => 9, :url => url.sub(/choice_start=\d*/, "choice_start=#{choice_start+7}"),          :prompt => "More choices" } end
-    back = doc.xpath("//ul//a[@id='back']")[0]; if back then choices << { :number => 'star', :url => add_parameter(back.xpath("@href").to_s, "format=xml"), :prompt => back.xpath("text()") } end
+    back = doc.xpath("//ul//a[@id='back']")[0]; if back then choices << { :number => '*', :url => add_parameter(back.xpath("@href").to_s, "format=xml"), :prompt => back.xpath("text()") } end
     @content = { :paragraphs => doc.xpath("//p/text()").collect { |node| node.to_s },
                  :choices    => choices }
   end 

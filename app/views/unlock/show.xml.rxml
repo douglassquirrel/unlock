@@ -10,8 +10,12 @@ def add_choices(xml, choices)
     choices.each do |choice|
       add_prompt(xml, "Press #{choice[:number]} for #{choice[:prompt]}")
     end
-    xml.grammar "type"=>"text/gsl" do
-      xml.cdata! "[" + (choices.collect { |choice| "[dtmf-#{choice[:number]}] {<choice \"#{choice[:number]}\">}" }.join("\n")) + "]"
+    xml.grammar "xml:lang"=>"en-GB", "root"=>"top", "mode"=>"dtmf" do
+      xml.rule "id"=>"top" do
+        xml.__send__('one-of'.to_sym) do
+          choices.each { |choice| xml.item choice[:number] }
+        end
+      end
     end
     xml.noinput do add_prompt(xml, "I did not hear anything. Please try again."); xml.reprompt; end
     xml.nomatch do add_prompt(xml, "I did not recognise that. Please try again."); xml.reprompt; end
@@ -27,6 +31,7 @@ end
 
 xml.instruct! 
 xml.vxml "xmlns" => "http://www.w3.org/2001/vxml", "version" => "2.0" do
+  xml.meta "name" => "maintainer", "content" => "squirrel@blindpages.com"
   xml.form do
     xml.block do
       xml.break "time" => "1000"
