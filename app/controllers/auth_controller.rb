@@ -3,11 +3,12 @@ class AuthController < ApplicationController
   end
 
   def login
-    if 1==1 then 
+    @user = User.find_by_passcode(params[:passcode])
+    if (@user.nil?) then 
       flash[:notice] = "Passcode not recognised"
       redirect_to :action => "index"
     else
-      redirect_to "/home"
+      redirect_to "/home?user=#{@user.first_name}"
     end
   end
 end
