@@ -9,13 +9,18 @@ xml.instruct!
 xml.vxml "xmlns" => "http://www.w3.org/2001/vxml", "version" => "2.0" do
   xml.meta "name" => "maintainer", "content" => "squirrel@blindpages.com"
   xml.form do
+    xml.block do
+      xml.break "time" => "1000"
+      add_prompt(xml, "Blind pages")
+      add_prompt(xml, "Enter your pass code")
+    end
+
     xml.field "name"=>"passcode", "type"=>"digits?length=10" do
-      add_prompt(xml, "Please enter your pass code")
       xml.noinput do add_prompt(xml, "I did not hear anything. Please try again."); xml.reprompt; end
       xml.nomatch do add_prompt(xml, "I did not recognise that. Please try again."); xml.reprompt; end
     end
     xml.filled do
-      xml.submit "next" => "auth/login?format=xml", "method" => "get"
+      xml.submit "next" => "/auth/login?format=xml", "method" => "get"
     end
   end
 end
