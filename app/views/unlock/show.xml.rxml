@@ -1,13 +1,20 @@
+def add_prompt(xml, text)
+  xml.prompt do
+    xml.prosody({"rate" => "-20%"}, text)
+    xml.break "time" => "500"
+  end
+end
+
 def add_choices(xml, choices)
   xml.field "name"=>"choice" do
     choices.each do |choice|
-      xml.prompt "Press #{choice[:number]} for #{choice[:prompt]}"
+      add_prompt(xml, "Press #{choice[:number]} for #{choice[:prompt]}")
     end
     xml.grammar "type"=>"text/gsl" do
       xml.cdata! "[" + (choices.collect { |choice| "[dtmf-#{choice[:number]}] {<choice \"#{choice[:number]}\">}" }.join("\n")) + "]"
     end
-    xml.noinput do xml.prompt "I did not hear anything. Please try again."; xml.reprompt; end
-    xml.nomatch do xml.prompt "I did not recognise that. Please try again."; xml.reprompt; end
+    xml.noinput do add_prompt(xml, "I did not hear anything. Please try again."); xml.reprompt; end
+    xml.nomatch do add_prompt(xml, "I did not recognise that. Please try again."); xml.reprompt; end
   end
   xml.filled do
     choices.each do |choice|
@@ -24,7 +31,7 @@ xml.vxml "xmlns" => "http://www.w3.org/2001/vxml", "version" => "2.0" do
     xml.block do
       xml.break "time" => "1000"
       @content[:paragraphs].each do |text|
-        xml.prompt text
+        add_prompt(xml, text)
       end
     end
     add_choices(xml, @content[:choices])
