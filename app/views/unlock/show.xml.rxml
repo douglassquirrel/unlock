@@ -8,7 +8,8 @@ end
 def add_choices(xml, choices)
   xml.field "name"=>"choice" do
     choices.each do |choice|
-      add_prompt(xml, "Press #{choice[:number]} for #{choice[:prompt]}")
+      choice_tone = choice[:number] == "*" ? "star" : choice[:number]
+      add_prompt(xml, "Press #{choice_tone} for #{choice[:prompt]}")
     end
     xml.grammar "xml:lang"=>"en-GB", "root"=>"top", "mode"=>"dtmf" do
       xml.rule "id"=>"top" do
