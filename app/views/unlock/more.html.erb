@@ -8,9 +8,17 @@
   <body>
     <p>Selected users in the United Kingdom are currently trialling BlindPages. This lets us verify that it's robust and ready for everyone to use. When BlindPages is fully tested, we plan to make it available to any blind or partially-sighted person in the UK for a subscription fee of £10/month, and eventually to any blind or partially-sighted person with an internet connection anywhere in the world.</p>
 
-    <p><a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#115;&#117;&#112;&#112;&#x6f;&#x72;&#x74;&#49;&#50;&#51;&#x40;&#x62;&#x6c;&#105;&#110;&#x64;&#112;&#x61;&#x67;&#x65;&#x73;&#46;&#99;&#111;&#109;">Send email to blindpages</a> to ask a question or to join our growing mailing list. Being on the mailing list is the best way to get an invitation to participate in our trial and to make sure you know when Blindpages launches in your country.</p>
+    <p>Submit your email address below to get more information about BlindPages - we'll write back to you soon and find out what pages you'd like us to unlock and to arrange a trial. We'll also invite you to join our mailing list (of course we won't add you without permission) - being on the mailing list is the best way to get an invitation to participate in our trial and to make sure you know when Blindpages launches in your country.</p>
 
-    <p>(If you have trouble with the email link above, just send your email directly to support-one-two-three at blindpages dot com.)</p> 
+    <% form_tag('/thanks', :method => :get) do %>
+      <p>
+        <label for="email">Your email: </label>
+        <%= text_field_tag :email %>
+        <%= submit_tag "Send" %>        
+      </p>
+    <% end %>
+
+    <p>(If you have trouble with the form above, just send your email directly to support-one-two-three at blindpages dot com.)</p> 
 
     <p><a href="privacy">Privacy Policy</a></p>
     <script type="text/javascript">

@@ -16,6 +16,11 @@ class UnlockController < ApplicationController
     end
   end
 
+  def thanks
+    @email = params[:email]
+    logger.info "BLINDPAGES: #{Time.new.to_s} Request for info - #{@email}"
+  end
+
   private
 
   def convert_to_voice_xml

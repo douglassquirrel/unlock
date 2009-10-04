@@ -6,6 +6,9 @@ ActionController::Routing::Routes.draw do |map|
   map.more "more",
     :controller => "unlock",
     :action => "more"
+  map.thanks "thanks",
+    :controller => "unlock",
+    :action => "thanks"
   map.privacy "privacy",
     :controller => "unlock", 
     :action => "privacy"
