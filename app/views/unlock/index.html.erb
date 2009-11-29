@@ -2,22 +2,26 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>BlindPages - Audio Description, Web Accessibility, and More</title>
+    <title>BlindPages - No-Hassle Web Accessibility</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
   </head>
   <body>
-    <p>Hello and welcome to BlindPages - Accessibility Without the Wait!</p>
-    <p>We think it's a <em>crying shame</em> that blind and partially sighted people have to wait for some company or other to make their favourite content usable. You may already know that only a small percentage of sites make their pages and videos and other content accessible, so you could be waiting a <em>long</em> time! So we set out to make <em>anything</em> accessible, <em>when you want it</em>, without the wait!</p>
-    <p>Don't believe us? Try it out using the form below. Describe what you want to use - a web site, a youTube video, a BBC TV programme, or something else. We'll get cracking on making it accessible for you and ask you to tell us what you think of the result. Since you're helping us improve our service, of course we wouldn't think of charging - your request is totally <em>free</em>.</p>
-
+    <p>Hello and welcome to BlindPages - No-Hassle Web Accessibility!</p>
+    <p>Our mission is simple - make your web pages accessible, with <em>zero effort</em> required from you! How do we do that? It's simple - our servers interpret your existing pages and re-serve them to customers in a fully compliant, totally accessible way. Your content is unchanged and your development and IT staff don't have to make any alterations to the main site at all.</p>
+    <p>We operate our own servers and monitor them continuously to ensure your disabled customers are getting all your content and services. Our strict automated tests verify that your content is being rendered correctly. Included in the service are updates to match any changes you make to your main site.</p>
+    <p>You might need our services if:</p>
+      <ul>
+        <li>Customers are demanding accessible pages, but you don't have the time or budget for a site rewrite.</li>
+        <li>You want to become compliant with laws like the Americans With Disabilities Act or the UK Disability Discrimination Act, but your IT staff have a huge backlog of work to get through first.</li>
+        <li>A disabled person's organisation is pushing you to become accessible, but web updates are hard for your organisation to make (for instance, if your web development is outsourced).</li>
+      </ul>
+    <p>Sound too good to be true? Give us a way to get in touch with you below and we'll be happy to show you what we can do. We can "unlock" one of your pages for you free of charge so you can see how easy and quick the service is. Or we can meet with you and your IT staff to discuss how BlindPages could work for you.</p>
     <% form_tag('/thanks', :method => :get) do %>
       <p>
-        <label for="video"><strong>Video</strong></label> (Is there a video you'd like to have audio described, maybe on youTube, a BBC channel, or somewhere else? If so, tell us where to find it.)<br/>
-        <%= text_field_tag :video %><br/>
-        <label for="site"><strong>Web site</strong></label> (Is there a web site you have trouble using? If so, tell us how to find it.)<br/>
-        <%= text_field_tag :site %><br/>
-        <label for="other"><strong>Anything else</strong></label> (We've only listed two things. Tell us what else we can make accessible for you and we'll give it our best shot!)<br/>
-        <%= text_field_tag :other %><br/>
+        <label for="name"><strong>Name:</strong></label> <br/>
+        <%= text_field_tag :name %><br/>
+        <label for="company"><strong>Company:</strong></label><br/>
+        <%= text_field_tag :company %><br/>
         <label for="contact"><strong>Contact info:</strong></label> (How do we get in touch with you? Email, phone, carrier pigeon?)<br/>
         <%= text_field_tag :contact %><br/>
         <%= submit_tag "Send" %>        
