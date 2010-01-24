@@ -5,15 +5,23 @@ require 'webrat'
 require 'webrat/adapters/mechanize'
 require 'net/ssh'
 
-class ResponseHelper
-  def response
-    webrat_session.response
-  end
+Webrat.configure do |config|
+  config.mode = :mechanize
 end
 
-World do
-  ResponseHelper.new
-  Webrat::Session.new(Webrat::MechanizeAdapter.new)
-end
+World(Webrat::Methods)
+World(Webrat::Matchers)
+
+
+#class ResponseHelper
+#  def response
+#    webrat_session.response
+#  end
+#end
+
+#World do
+#  ResponseHelper.new
+#  Webrat::Session.new(Webrat::MechanizeAdapter.new)
+#end
 
 
